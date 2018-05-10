@@ -1,0 +1,13 @@
+### Intellij ###
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
+
+### Maven ###
+target/
+build /
+
+### ScreenShots ###
+*.png
+*.jpg
