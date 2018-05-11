@@ -6,7 +6,7 @@ modules.xml
 
 ### Maven ###
 target/
-build /
+build/
 
 ### ScreenShots ###
 *.png
