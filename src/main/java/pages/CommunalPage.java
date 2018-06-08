@@ -1,11 +1,16 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 
+import java.util.concurrent.TimeUnit;
+
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.title;
 
 
 public class CommunalPage {
@@ -24,11 +29,16 @@ public class CommunalPage {
     public void chengeCity(String city)
     {
         $(By.xpath("//div[contains(text(),'ЖКХ')]/span/span")).click();
-        $(By.xpath("//div[@data-qa-file='UIRegions']/div/span/a/span[contains(text(),'"+city+"')]")).click();
+        $(By.xpath("//span[contains(text(),'"+city+"')]")).click();
     }
 
-    public void chooseProviderByText(String providerName)
+    public void chooseProviderByNumber(String providerNumber)
     {
-        $(By.xpath("//span[contains(text(),'"+providerName+"')]")).click();
+        $(By.xpath("//li[@data-qa-file='UIMenuItemProvider']["+providerNumber+"]")).click();
+        //$(By.xpath("//span[contains(text(),'"+providerNumber+"')]")).click();
+    }
+    public String getProviderName(String providerNumer)
+    {
+        return $(By.xpath("//li[@data-qa-file='UIMenuItemProvider'][1]")).text();
     }
 }

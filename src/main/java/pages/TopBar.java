@@ -20,16 +20,18 @@ public class TopBar {
 
     public void clickSecondMenuTabByText(String text)
     {
-        $(By.xpath("//a[contains(@data-qa-file,'Link')]/span[contains(text(),'"+text+"')]")).click();
+
+        $(By.xpath("//div[@data-qa-file='Tabs']//span[contains(text(),'"+text+"')]")).click();
+
         /*driver.findElement(By.xpath("//a[contains(@data-qa-file,'Link')]/span[contains(text(),'"+text+"')]"))
                 .click();*/
     }
     public void goToMainPage()
     {
-        $(By.xpath("//div[@data-qa-file=\"FirstMenu\"]/a/span[contains(text(),'Тинькофф')]")).click();
+        $(By.xpath("//div[@data-qa-file='FirstMenu']/a/span[contains(text(),'Тинькофф')]")).click();
     }
 
-    public void seach(String query)
+    public void search(String query)
     {
         $(By.xpath("//input[@data-qa-file='SearchInput']")).click();
       $(By.xpath("//input[@data-qa-file='SearchInput']")).setValue(query);
