@@ -1,16 +1,11 @@
 package pages;
 
-import com.codeborne.selenide.Condition;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 
-import java.util.concurrent.TimeUnit;
-
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.sleep;
-import static com.codeborne.selenide.Selenide.title;
 
 
 public class CommunalPage {
