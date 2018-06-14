@@ -29,6 +29,8 @@ public class ValidationTest {
     @Parameterized.Parameters(name = "{index}:validation({0}+{1}+{2}+{3})=({4}+{5}+{6}+{7})")
     public static Iterable<Object[]> dataForTest() {
         return Arrays.asList(new Object[][]{
+                {Map.ofEntries(Map.entry("Код плательщика за ЖКУ в Москве", ""), Map.entry("За какой период оплачиваете коммунальные услуги", ""), Map.entry("Сумма платежа", "")),
+                        Map.ofEntries(Map.entry("Код плательщика за ЖКУ в Москве", "Поле обязательное"), Map.entry("За какой период оплачиваете коммунальные услуги", "Поле обязательное"), Map.entry("Сумма платежа", "Поле обязательное"))},
                 {Map.ofEntries(Map.entry("Код плательщика за ЖКУ в Москве", "123")), Map.ofEntries(Map.entry("Код плательщика за ЖКУ в Москве", "Поле неправильно заполнено"))},
                 {Map.ofEntries(Map.entry("За какой период оплачиваете коммунальные услуги", "25.2018")), Map.ofEntries(Map.entry("За какой период оплачиваете коммунальные услуги", "Поле заполнено некорректно"))},
                 {Map.ofEntries(Map.entry("Сумма платежа", "9")), Map.ofEntries(Map.entry("Сумма платежа", "Минимум — 10 \u20BD"))},
