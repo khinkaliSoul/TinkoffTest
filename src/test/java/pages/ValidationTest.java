@@ -7,47 +7,39 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import static com.codeborne.selenide.Configuration.browser;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class ValidationTest {
-    private String valueA;
-    private String valueB;
-    private String valueC;
-    private String valueD;
-    private String expected1;
-    private String expected2;
-    private String expected3;
-    private String expected4;
+    private Map<String, String> values;
+    private Map<String, String> results;
 
 
-    public ValidationTest (String valueA, String valueB, String valueC, String valueD,
-                            String expected1, String expected2, String expected3, String expected4) {
-        this.valueA = valueA;
-        this.valueB = valueB;
-        this.valueC = valueC;
-        this.valueD = valueD;
-        this.expected1 = expected1;
-        this.expected2 = expected2;
-        this.expected3 = expected3;
-        this.expected4 = expected4;
+    public ValidationTest(Map values, Map results) {
+        this.values = values;
+        this.results = results;
+
     }
 
     @Parameterized.Parameters(name = "{index}:validation({0}+{1}+{2}+{3})=({4}+{5}+{6}+{7})")
     public static Iterable<Object[]> dataForTest() {
         return Arrays.asList(new Object[][]{
-                {"123", "25.2018", "15002", "15001", "Поле неправильно заполнено", "Поле заполнено некорректно", "Сумма добровольного страхования не может быть больше итоговой суммы.", "Максимум — 15 000 \u20BD"},
-                {"123", "25.2018", "15002", "9", "Поле неправильно заполнено", "Поле заполнено некорректно", "Сумма добровольного страхования не может быть больше итоговой суммы.", "Минимум — 10 \u20BD"},
-                {"", "25.2018", "15002", "9", "Поле обязательное", "Поле заполнено некорректно", "Сумма добровольного страхования не может быть больше итоговой суммы.", "Минимум — 10 \u20BD"},
-                {"123", "", "15002", "9", "Поле неправильно заполнено", "Поле обязательное", "Сумма добровольного страхования не может быть больше итоговой суммы.", "Минимум — 10 \u20BD"},
-                {"123", "25.2018", "15002", "", "Поле неправильно заполнено", "Поле заполнено некорректно","Поле обязательное","Поле обязательное"},
+                {Map.ofEntries(Map.entry("Код плательщика за ЖКУ в Москве", "123")), Map.ofEntries(Map.entry("Код плательщика за ЖКУ в Москве", "Поле неправильно заполнено"))},
+                {Map.ofEntries(Map.entry("За какой период оплачиваете коммунальные услуги", "25.2018")), Map.ofEntries(Map.entry("За какой период оплачиваете коммунальные услуги", "Поле заполнено некорректно"))},
+                {Map.ofEntries(Map.entry("Сумма платежа", "9")), Map.ofEntries(Map.entry("Сумма платежа", "Минимум — 10 \u20BD"))},
+                {Map.ofEntries(Map.entry("Сумма платежа", "15001")), Map.ofEntries(Map.entry("Сумма платежа", "Максимум — 15 000 \u20BD"))},
+                {Map.ofEntries(Map.entry("Сумма платежа", "15001"), Map.entry("Сумма добровольного страхования жилья из квитанции за ЖКУ в Москве", "15002")),
+                        Map.ofEntries(Map.entry("Сумма добровольного страхования жилья из квитанции за ЖКУ в Москве", "Сумма добровольного страхования не может быть больше итоговой суммы."))}
         });
     }
+
     public static WebDriver driver;
+
     @BeforeClass
     public static void setUp() {
         browser = "chrome";
@@ -59,15 +51,12 @@ public class ValidationTest {
     public void validationTest() {
         open("https://www.tinkoff.ru/zhku-moskva/oplata/?tab=pay");
         zkuMoskowPaymentPage zkuMoskowPaymentPage = new zkuMoskowPaymentPage(driver);
-        zkuMoskowPaymentPage.setValueByInputTitle("Код плательщика за ЖКУ в Москве", valueA);
-        zkuMoskowPaymentPage.setValueByInputTitle("За какой период оплачиваете коммунальные услуги", valueB);
-        zkuMoskowPaymentPage.setValueByInputTitle("Сумма добровольного страхования жилья из квитанции за ЖКУ в Москве", valueC);
-        zkuMoskowPaymentPage.setValueByInputTitle("Сумма платежа", valueD);
-        String[] errors = zkuMoskowPaymentPage.getErrorMessages();
-        assertTrue(Arrays.asList(errors).contains(expected1));
-        assertTrue(Arrays.asList(errors).contains(expected2));
-        assertTrue(Arrays.asList(errors).contains(expected3));
-        assertTrue(Arrays.asList(errors).contains(expected4));
+        for (Map.Entry<String, String> entry : values.entrySet()) {
+            zkuMoskowPaymentPage.setValueByInputTitle(entry.getKey(), entry.getValue());
+        }
+        for (Map.Entry<String, String> entry : results.entrySet()) {
+            assertEquals(entry.getValue(), zkuMoskowPaymentPage.getErrorMessage(entry.getKey()));
+        }
 
 
     }

@@ -11,13 +11,13 @@ public class PaymentPage {
 
     private WebDriver driver;
 
-    public PaymentPage (WebDriver driver){
+    public PaymentPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver=driver;
+        this.driver = driver;
     }
-    public void choosePaymentCategoryByText(String text)
-    {
-        $(By.xpath("//a[@title='"+text+"']/span")).click();
+
+    public void choosePaymentCategoryByText(String text) {
+        $(By.xpath("//a[@title='" + text + "']/span")).click();
     }
 
 }

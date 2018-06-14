@@ -10,39 +10,33 @@ import static com.codeborne.selenide.Selenide.$;
 public class TopBar {
     private WebDriver driver;
 
-    public TopBar (WebDriver driver)
-    {
+    public TopBar(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
-    public void clickSecondMenuTabByText(String text)
-    {
+    public void clickSecondMenuTabByText(String text) {
 
-        $(By.xpath("//div[@data-qa-file='Tabs']//span[contains(text(),'"+text+"')]")).click();
+        $(By.xpath("//div[@data-qa-file='Tabs']//span[contains(text(),'" + text + "')]")).click();
 
         /*driver.findElement(By.xpath("//a[contains(@data-qa-file,'Link')]/span[contains(text(),'"+text+"')]"))
                 .click();*/
     }
-    public void goToMainPage()
-    {
+
+    public void goToMainPage() {
         $(By.xpath("//div[@data-qa-file='FirstMenu']/a/span[contains(text(),'Тинькофф')]")).click();
     }
 
-    public void search(String query)
-    {
+    public void search(String query) {
         $(By.xpath("//input[@data-qa-file='SearchInput']")).click();
-      $(By.xpath("//input[@data-qa-file='SearchInput']")).setValue(query);
+        $(By.xpath("//input[@data-qa-file='SearchInput']")).setValue(query);
     }
 
-    public boolean isSuggestElementOnNumber(String num, String providerName)
-    {
+    public boolean isSuggestElementOnNumber(String num, String providerName) {
         try {
             $(By.xpath("//div[@data-qa-file='SuggestBlock']/div[@data-qa-file='Grid']/div[" + num + "]//div/div[contains(text(),'" + providerName + "')]"));
             return true;
-        }
-        catch (NoSuchElementException e)
-        {
+        } catch (NoSuchElementException e) {
             return false;
         }
     }
@@ -50,7 +44,6 @@ public class TopBar {
     public void selectSuggestElementOnNumber(String num, String providerName) {
         $(By.xpath("//div[@data-qa-file='SuggestBlock']/div[@data-qa-file='Grid']/div[" + num + "]//div/div[contains(text(),'" + providerName + "')]")).click();
     }
-
 
 
 }

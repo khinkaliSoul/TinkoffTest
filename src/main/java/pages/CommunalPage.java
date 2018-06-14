@@ -11,29 +11,26 @@ import static com.codeborne.selenide.Selenide.$;
 public class CommunalPage {
     private WebDriver driver;
 
-    public CommunalPage (WebDriver driver){
+    public CommunalPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver=driver;
+        this.driver = driver;
     }
 
-    public String getCity()
-    {
-        return $(By.xpath("//div[contains(text(),'ЖКХ')]/span/span")).getText();
+    public String getCity() {
+        return $(By.xpath("//div[contains(text(),'ЖКХ')]//span[@data-qa-file='Link']")).getText();
     }
 
-    public void chengeCity(String city)
-    {
-        $(By.xpath("//div[contains(text(),'ЖКХ')]/span/span")).click();
-        $(By.xpath("//span[contains(text(),'"+city+"')]")).click();
+    public void chengeCity(String city) {
+        $(By.xpath("//div[contains(text(),'ЖКХ')]//span[@data-qa-file='Link']")).click();
+        $(By.xpath("//span[contains(text(),'" + city + "')]")).click();
     }
 
-    public void chooseProviderByNumber(String providerNumber)
-    {
-        $(By.xpath("//li[@data-qa-file='UIMenuItemProvider']["+providerNumber+"]")).click();
+    public void chooseProviderByNumber(String providerNumber) {
+        $(By.xpath("//li[@data-qa-file='UIMenuItemProvider'][" + providerNumber + "]")).click();
         //$(By.xpath("//span[contains(text(),'"+providerNumber+"')]")).click();
     }
-    public String getProviderName(String providerNumer)
-    {
+
+    public String getProviderName(String providerNumer) {
         return $(By.xpath("//li[@data-qa-file='UIMenuItemProvider'][1]")).text();
     }
 }

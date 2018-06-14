@@ -28,24 +28,9 @@ public class zkuMoskowPaymentPage {
         input.setValue(value).pressEnter();
     }
 
-    public String[] getErrorMessages() {
-        String[] list;
-        list = $$(By.xpath("//div[@data-qa-file='UIFormRowError']")).getTexts();
-//        String errorMessage = null;
-//        switch (title) {
-//            case "Код плательщика за ЖКУ в Москве":
-//                errorMessage = $(xpath("//span[contains(text(),'Код плательщика за ЖКУ в Москве')]//..//..//..//..//..//div[@data-qa-file='UIFormRowError']")).getText();
-//                break;
-//            case "За какой период оплачиваете коммунальные услуги":
-//                errorMessage = $(xpath("//span[contains(text(),'За какой период оплачиваете коммунальные услуги')]//..//..//..//..//..//..//div[@data-qa-file='UIFormRowError']")).getText();
-//                break;
-//            case "Сумма добровольного страхования жилья из квитанции за ЖКУ в Москве":
-//                errorMessage = $(xpath("//span[contains(text(),'Сумма добровольного страхования жилья из квитанции за ЖКУ в Москве')]//..//..//..//div[@data-qa-file='UIFormRowError']")).getText();
-//                break;
-//            case "Сумма платежа":
-//                errorMessage = $(xpath("//span[contains(text(),'Сумма платежа')]//..//..//..//div[@data-qa-file='UIFormRowError']")).getText();
-//                break;
-        return list;
+    public String getErrorMessage(String title) {
+
+        return $(By.xpath("//span[contains(text(),'" + title + "')]//following::div[@data-qa-file='UIFormRowError'][1]")).text();
     }
 }
 
